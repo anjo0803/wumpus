@@ -91,14 +91,10 @@ function switchShooting() {
         document.getElementById('character').getAttribute('class').replace(' shooting', '') + (shooting ? ' shooting' : ''));
 }
 
-document.addEventListener('keydown', e => {
-    if(running) {
-        if(['W', 'A', 'S', 'D'].includes(e.key.toUpperCase())) action(e.key);
-        else if(e.key.toUpperCase() == 'Q') {
-            if(!['L', 'R'].includes(MAP[PLAYER.x][PLAYER.y])) switchShooting();
-            // TODO else play sound
-        }
-    } 
+document.addEventListener('keydown', e => action(e.key.toUpperCase()));
+
+document.getElementById('character').addEventListener('click', e => {
+    if(running) switchShooting();
 });
 
 adjustSizes();
