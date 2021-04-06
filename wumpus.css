@@ -1,0 +1,134 @@
+/*
+The root element contains a number of variables,
+which can be easily influenced via JavaScript.
+They are used to e.g. properly align the player
+character, the bats, or the Wumpus.
+*/
+:root {
+    --wumpus-x: 0;
+    --wumpus-y: 0;
+    --player-x: 0;
+    --player-y: 0;
+    --cells-x: 10;
+    --cells-y: 10;
+    --cell-size: 50px;
+}
+
+
+/*
+Base page layout:
+Header & footer fit their content, main content fills rest.
+*/
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    flex: 0 1 auto;
+}
+
+main {
+    height: 100%;
+}
+
+footer {
+    flex: 0 1 40px;
+}
+
+
+/*
+Main content layout:
+Control buttons at the bottom,
+canvas & overlay fill rest.
+*/
+
+#game {
+    width: 100%;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-display {
+    height: 90%;
+    display: grid;
+    grid-template-rows: repeat(var(--cells-y), var(--cell-size));
+    grid-template-columns: repeat(var(--cells-x), var(--cell-size));
+}
+
+#controls {
+    height: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#bgpath {
+    grid-area: 1 / 1 / var(--cells-x) / var(--cells-y);
+}
+
+
+/*
+Scaling and positioning of movable game objects.
+*/
+
+.scalable {
+    width: calc(var(--cell-size) * 0.5);
+    height: calc(var(--cell-size) * 0.5);
+}
+
+#wumpus,
+#character {
+    z-index: 1;
+}
+
+#wumpus {
+    grid-row: calc(var(--wumpus-y) + 1);
+    grid-column: calc(var(--wumpus-x) + 1);
+}
+
+#character {
+    grid-row: calc(var(--player-y) + 1);
+    grid-column: calc(var(--player-x) + 1);
+}
+
+.shooting {
+    filter: hue-rotate(160deg);
+}
+
+
+/*
+In-cell alignment for movable game objects is done
+by editing the HTML object's class attribute.
+*/
+
+.cell-center {
+    justify-self: center;
+    align-self: center;
+}
+
+.cell-right {
+    justify-self: end;
+}
+
+.cell-left {
+    justify-self: start;
+}
+
+.cell-top {
+    align-self: start;
+}
+
+.cell-bottom {
+    align-self: end;
+}

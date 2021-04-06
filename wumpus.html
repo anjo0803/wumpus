@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="wumpus.css">
+    <link rel="shortcut icon" href="img/icon.png" type="image/png">
+    <title>Hunt ze Wumpuz</title>
+    <script src="map.js" defer></script>
+    <script src="movement.js" defer></script>
+    <script src="core.js" defer></script>
+
+    <!-- OpenGraph properties -->
+    <meta property="og:site_name" content="anjo">
+    <meta property="og:url" content="https://anjo0803.github.io/wumpus/wumpus.html">
+    <meta property="og:title" content="Hunt the Wumpus">
+    <meta property="og:description" content="The Wumpus has insulted the glorious Class Council. As all Grattlers, it thus must die.">
+    <meta property="og:image" content="https://anjo0803.github.io/wumpus/img/wumpus.png">
+</head>
+<body>
+    <header>
+        <h1>Wumpus</h1>
+    </header>
+    <main>
+        <section class="welcome">
+            <!-- InfoBox for introduction -->
+        </section>
+        <section id="game">
+            <div id="game-display">
+                <canvas id="bgpath" width="500" height="500">
+                    The canvas function, which is required for this game, is not supported by your browser.
+                </canvas>
+                <img src="img/wumpus.png" alt="wumpus" id="wumpus" class="scalable cell-center">
+                <img src="img/character.png" alt="character" id="character" class="scalable cell-center">
+                <!-- <img src="" alt="bat" class="bat cell-center" hidden>
+                    <img src="" alt="bat" class="bat cell-center" hidden> -->
+            </div>
+            <div id="controls">
+                <button onclick="action('w');">Up</button>
+                <div>
+                    <button onclick="action('a');">Left</button>
+                    <button onclick="action('s');">Down</button>
+                    <button onclick="action('d');">Right</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pre-load game sprites for canvas -->
+        <aside hidden>
+            <img src="img/C.png" width="50" height="50" id="C">
+            <img src="img/R.png" width="50" height="50" id="R">
+            <img src="img/L.png" width="50" height="50" id="L">
+            <img src="img/P.png" width="50" height="50" id="P">
+            <img src="img/CD.png" width="50" height="50" id="CD">
+            <img src="img/CP.png" width="50" height="50" id="CP">
+            <img src="img/CPD.png" width="50" height="50" id="CPD">
+            <img src="img/PD.png" width="50" height="50" id="PD">
+        </aside>
+    </main>
+    <footer>
+        <button onclick="newGame();">Restart</button>
+    </footer>
+</body>
+</html>
