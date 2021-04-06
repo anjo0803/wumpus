@@ -3,24 +3,41 @@ Functions for moving things around the map.
 */
 
 function action(direction) {
-    if(['W', 'A', 'S', 'D'].includes(direction = direction.toUpperCase())) {
-        if(!shooting) {
-            toNextRoom(PLAYER, direction);
-            document.documentElement.style.setProperty('--player-x', PLAYER.x);
-            document.documentElement.style.setProperty('--player-y', PLAYER.y);
-            document.getElementById('character').setAttribute('class', 'scalable ' 
-                + (MAP[PLAYER.x][PLAYER.y] == 'R' ? PLAYER.tunnel == -1 ? 'cell-bottom cell-right' : 'cell-top cell-left'
-                    : MAP[PLAYER.x][PLAYER.y] == 'L' ? PLAYER.tunnel == -1 ? 'cell-bottom cell-left' : 'cell-top cell-right'
-                    : 'cell-center'));
-            printCell(PLAYER.x, PLAYER.y);
-            if(WUMPUS.x == PLAYER.x && WUMPUS.y == PLAYER.y) gameEnd('wumpus');
-            else if(['P', 'PD'].includes(MAP[PLAYER.x][PLAYER.y])) gameEnd('pit');
-        } else {
-            let target = toNextCrossing(PLAYER, direction);
-            if(target.x == WUMPUS.x && target.y == WUMPUS.y) gameEnd('victory');
-            else gameEnd('wumpus');
+    if(running) {
+
+        // If a movement key was pressed:
+        if(['W', 'A', 'S', 'D'].includes(direction)) {
+
+            // Either move or shoot
+            if(!shooting) movePlayer(direction);
+            else shoot(direction);
         }
-    }
+
+        // If shooting mode switch key was pressed:
+        else if(direction == 'Q') {
+            if(!['L', 'R'].includes(MAP[PLAYER.x][PLAYER.y])) switchShooting();
+            // TODO else play sound
+        }
+    } 
+}
+
+function movePlayer(direction) {
+    toNextRoom(PLAYER, direction);
+    document.documentElement.style.setProperty('--player-x', PLAYER.x);
+    document.documentElement.style.setProperty('--player-y', PLAYER.y);
+    document.getElementById('character').setAttribute('class', 'scalable ' 
+        + (MAP[PLAYER.x][PLAYER.y] == 'R' ? PLAYER.tunnel == -1 ? 'cell-bottom cell-right' : 'cell-top cell-left'
+            : MAP[PLAYER.x][PLAYER.y] == 'L' ? PLAYER.tunnel == -1 ? 'cell-bottom cell-left' : 'cell-top cell-right'
+            : 'cell-center'));
+    printCell(PLAYER.x, PLAYER.y);
+    if(WUMPUS.x == PLAYER.x && WUMPUS.y == PLAYER.y) gameEnd('wumpus');
+    else if(['P', 'PD'].includes(MAP[PLAYER.x][PLAYER.y])) gameEnd('pit');
+}
+
+function shoot(direction) {
+    let target = toNextCrossing(PLAYER, direction);
+    if(target.x == WUMPUS.x && target.y == WUMPUS.y) gameEnd('victory');
+    else gameEnd('wumpus');
 }
 
 function toNextRoom(position, direction) {
